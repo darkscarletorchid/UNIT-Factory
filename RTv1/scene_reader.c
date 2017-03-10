@@ -62,14 +62,17 @@ void	find_coord(char *line, t_vector *pos)
 void	find_camera_params(int fd, t_env *e)
 {
 	char	*line;
+	char	*t;
 
-	while (get_next_line(fd, &line) > 0 && ft_strcmp(ft_strtrim(line), "}"))
+	while (get_next_line(fd, &line) > 0 && ft_strcmp((t = ft_strtrim(line)), "}"))
 	{
 		if (ft_strstr(line, "position"))
 			find_coord(line, &e->scene.cams.origin);
 		else if (ft_strstr(line, "fov"))
 			e->scene.cams.fov = (int)find_double(line);
 		ft_strdel(&line);
+		ft_strdel(&t);
 	}
 	ft_strdel(&line);
+	ft_strdel(&t);
 }

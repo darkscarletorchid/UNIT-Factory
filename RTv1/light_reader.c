@@ -31,8 +31,9 @@ void	find_light_intensity(char *line, t_env *e)
 void	find_light_params(int fd, t_env *e)
 {
 	char	*line;
+	char	*temp;
 
-	while (get_next_line(fd, &line) > 0 && ft_strcmp(ft_strtrim(line), "}"))
+	while (get_next_line(fd, &line) > 0 && ft_strcmp((temp = ft_strtrim(line)), "}"))
 	{
 		if (ft_strstr(line, "number of light"))
 		{
@@ -44,7 +45,9 @@ void	find_light_params(int fd, t_env *e)
 		else if (ft_strstr(line, "intensity"))
 			find_light_intensity(line, e);
 		ft_strdel(&line);
+		ft_strdel(&temp);
 	}
 	ft_strdel(&line);
+	ft_strdel(&temp);
 }
 

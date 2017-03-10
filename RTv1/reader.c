@@ -2,9 +2,10 @@
 
 void	read_scene(int fd, t_env *e)
 {
-	char *line;
+	char	*line;
+	char	*temp;
 
-	while (get_next_line(fd, &line) > 0 && ft_strcmp(ft_strtrim(line), "}"))
+	while (get_next_line(fd, &line) > 0 && ft_strcmp((temp = ft_strtrim(line)), "}"))
 	{
 		if (ft_strstr(line, "name"))
 			e->scene.title = find_name(line);
@@ -15,16 +16,19 @@ void	read_scene(int fd, t_env *e)
 		else if (ft_strstr(line, "light"))
 			find_light_params(fd, e);
 		ft_strdel(&line);
+		ft_strdel(&temp);
 	}
 	ft_strdel(&line);
+	ft_strdel(&temp);
 }
 
 
 void	read_objects(int fd, t_env *e)
 {
 	char	*line;
+	char	*temp;
 
-	while (get_next_line(fd, &line) > 0 && ft_strcmp(ft_strtrim(line), "}"))
+	while (get_next_line(fd, &line) > 0 && ft_strcmp((temp = ft_strtrim(line)), "}"))
 	{
 		if (ft_strstr(line, "number of objects"))
 		{
@@ -33,7 +37,9 @@ void	read_objects(int fd, t_env *e)
 			find_obj(fd, e);
 		}
 		ft_strdel(&line);
+		ft_strdel(&temp);
 	}
+	ft_strdel(&temp);
 	ft_strdel(&line);
 }
 

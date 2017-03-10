@@ -27,8 +27,9 @@ double	find_double(char *line)
 void	find_object_data(int fd, t_env *e, int i)
 {
 	char	*line;
+	char	*t;
 
-	while (get_next_line(fd, &line) && ft_strcmp(ft_strtrim(line), "}"))
+	while (get_next_line(fd, &line) && ft_strcmp((t = ft_strtrim(line)), "}"))
 	{
 		if (ft_strstr(line,"position"))
 			find_coord(line, &e->scene.obs[i].pos);
@@ -47,17 +48,20 @@ void	find_object_data(int fd, t_env *e, int i)
 		else if (ft_strstr(line, "color"))
 			 find_coord(line, &e->scene.obs[i].color);
 		ft_strdel(&line);
+		ft_strdel(&t);
 	}
 	ft_strdel(&line);
+	ft_strdel(&t);
 }
 
 void	find_obj(int fd, t_env *e)
 {
-	int i;
-	char *line;
+	int		i;
+	char	*line;
+	char	*temp;
 
 	i = 0;
-	while (i < e->scene.obj_nb && get_next_line(fd, &line) && ft_strcmp(ft_strtrim(line), "}"))
+	while (i < e->scene.obj_nb && get_next_line(fd, &line) && ft_strcmp((temp = ft_strtrim(line)), "}"))
 	{
 		if (ft_strstr(line, "name"))
 			e->scene.obs[i].name = find_name(line);
@@ -67,6 +71,8 @@ void	find_obj(int fd, t_env *e)
 			i++;
 		}
 		ft_strdel(&line);
+		ft_strdel(&temp);
 	}
 	ft_strdel(&line);
+	ft_strdel(&temp);
 }
