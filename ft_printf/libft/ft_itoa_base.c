@@ -12,29 +12,12 @@
 
 #include "libft.h"
 
-int		nblen(int nb, int base)
-{
-	int i;
-
-	i = 0;
-	if (nb == 0)
-		i++;
-	if (nb < 0 && base == 10)
-		i++;
-	while (nb)
-	{
-		nb = nb / base;
-		i++;
-	}
-	return (i);
-}
-
-char	*ft_itoa_base(int value, int base)
+char	*ft_itoa_base(long long int value, int base)
 {
 	const char	*hex;
 	char		*res;
 	int			len;
-	int			temp;
+	long long int	temp;
 
 	hex = "0123456789ABCDEF";
 	temp = value;

@@ -15,9 +15,7 @@
 int		ft_printf(const char *format, ...)
 {
 	va_list ap;
-	//t_printf *p;
 
-	//p = (t_printf *)malloc(sizeof(t_printf));
 	va_start(ap, format);
 	char *str = (char *)format;
 	while (*str)
@@ -39,13 +37,16 @@ int		ft_printf(const char *format, ...)
 
 int main()
 {
-	int d = 2665;
-	int t = 45;
+	//int d = 2665;
+	unsigned long int t = 4559898552222;
+	//int t = 100;
 	char f = 'A';
 
-	int c = ft_printf("fopojjoij%s llll %o %c\n", "kokokkokokoko", t, f);
-	int p = printf("fopojjoij%s llll %o %c\n", "kokokkokokoko", t, f);
+//	int c = ft_printf("fopojjoij%25s llll %6D %3d\n", "kokokkokokoko", t, f);
+//	int p = printf("fopojjoij%25s llll %6ld%+4d\n", "kokokkokokoko", t, f);
 	//
+	int c = ft_printf("fopojjoij %-20c\n", 'a');
+	int p = printf("fopojjoij %-20c\n", 'a');
 	printf("\n%d\n", c);
 	printf("\n%d\n", p);
 	return (0);

@@ -1,75 +1,97 @@
-//
-// Created by Anastasiia Trepyton on 3/13/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   conversion.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 17:43:50 by atrepyto          #+#    #+#             */
+/*   Updated: 2017/03/15 17:44:28 by atrepyto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	flags(t_printf p)
+void	flags(t_printf *p)
 {
-	char *s = p.arg;
+	char *s;
+
+	s = p->arg;
 	while (*s)
 	{
 		if (*s == '-')
-			p.minus = 1;
+			p->minus = 1;
 		else if (*s == '+')
-			p.plus = 1;
+			p->plus = 1;
 		else if (*s == '0')
-			p.zero = 1;
+			p->zero = 1;
 		else if (*s == '#')
-			p.sharp = 1;
+			p->sharp = 2;
 		else if (*s == ' ')
-			p.space = 1;
+			p->space = 1;
 		s++;
 	}
 }
 
-void	put_arg(t_printf p, va_list ap)
+void	length_flags(t_printf *p, char *s)
 {
-	char *s;
-
-	if (p.convers == 'd' || p.convers == 'i')
-		c_putnbr(va_arg(ap, int));
-	else if (p.convers == 'u')
-		c_putnbr(va_arg(ap, unsigned int));
-	else if (p.convers == 'U')
-		c_putnbr(va_arg(ap, unsigned long int));
-	else if (p.convers == 's')
-		c_putstr(va_arg(ap, char *));
-	else if (p.convers == 'c')
-		c_putchar((char)va_arg(ap, int));
-	else if (p.convers == 'X' || p.convers == 'x')
+	while (*s)
 	{
-		s =  ft_itoa_base(va_arg(ap, int), 16);
-		if (p.convers == 'x')
-			ft_lowercase(s);
-		c_putstr(s);
-		ft_strdel(&s);
-	}
-	else if (p.convers == 'o')
-	{
-		s =  ft_itoa_base(va_arg(ap, int), 8);
-		c_putstr(s);
-		ft_strdel(&s);
+		if (ft_strchr("hljz", *s))
+		{
+			if (*(s + 1) == 'h' || *(s + 1) == 'l')
+				p->length = ft_strndup(s, 2);
+			else
+				p->length = ft_strndup(s, 1);
+			break ;
+		}
+		s++;
 	}
 }
 
-int	check_conversion(char *format, va_list ap)
+void	parse_arg(t_printf *p)
 {
-	int i;
-	t_printf p;
+	char *s;
+
+	flags(p);
+	s = p->arg;
+	while (ft_strchr("+-0# ", *s) && *s)
+		++s;
+	p->width = ft_atoi(s);
+	while (*s)
+	{
+		if (*s == '.')
+		{
+			p->precision = ft_atoi(s + 1);
+			break ;
+		}
+		s++;
+	}
+	length_flags(p, s);
+}
+
+int		check_conversion(char *format, va_list ap)
+{
+	size_t		i;
+	t_printf	p;
 
 	i = 0;
+	p.convers = '0';
 	while (format[i])
 	{
 		if (ft_strchr("sSpdDioOuUxXcC", format[i]))
 		{
 			p.convers = format[i];
-			break;
+			break ;
 		}
 		i++;
 	}
+/*
+** if (p.convers == '0')
+**		undefined_behaviour(); UNDEFINED BEHAVIOUR if conversion not found
+*/
 	p.arg = ft_strndup(format, i + 1);
-	flags(p);
-	put_arg(p, ap);
-	return (ft_strlen(p.arg));
+	parse_arg(&p);
+	put_arg(&p, ap);
+	return ((int)ft_strlen(p.arg));
 }

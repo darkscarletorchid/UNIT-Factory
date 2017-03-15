@@ -94,6 +94,7 @@ int					ft_isspace(int c);
 char				*ft_strndup(const char *s1, size_t n);
 int					get_next_line(const int fd, char **line);
 double				ft_atof(const char *str);
-char				*ft_itoa_base(int value, int base);
-
+char				*ft_itoa_base(long long int value, int base);
+int					nblen(long long int nb, int base);
+int					unsigned_nblen(unsigned long int nb, int base);
 #endif

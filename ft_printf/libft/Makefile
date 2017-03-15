@@ -26,7 +26,7 @@ SRC = ./ft_atoi.c ./ft_bzero.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c \
 	  ./ft_lstdel.c ./ft_lstadd.c ./ft_lstdelone.c ./ft_lstiter.c ./ft_lstmap.c \
 	  ./ft_lstnew.c ./ft_strrev.c ./ft_swap.c ./ft_uppercase.c ./ft_lowercase.c \
 	  ./ft_strlcpy.c ./ft_replacechr.c ./ft_strndup.c ./get_next_line.c \
-	  ./ft_isspace.c ./ft_atof.c ./ft_itoa_base.c
+	  ./ft_isspace.c ./ft_atof.c ./ft_itoa_base.c ./ft_nblen.c
 
 OBJ = $(SRC:.c=.o)	
 
