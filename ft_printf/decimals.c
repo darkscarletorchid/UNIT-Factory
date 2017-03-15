@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	put_d_i(t_printf *p, va_list ap)
+void	simple_di(t_printf *p, va_list ap)
 {
 	int		len;
 	int		nb;
@@ -30,6 +30,24 @@ void	put_d_i(t_printf *p, va_list ap)
 	c_putnbr(nb);
 	if (p->minus == 1)
 		print_spaces(p, len);
+}
+
+void	put_d_i(t_printf *p, va_list ap)
+{
+	if (ft_strcmp("h", p->length) == 0)
+		h_flag(p, ap);
+	if (ft_strcmp("hh", p->length) == 0)
+		hh_flag(p, ap);
+	if (ft_strcmp("l", p->length) == 0)
+		put_long_d(p, ap);
+	if (ft_strcmp("ll", p->length) == 0)
+		ll_flag(p, ap);
+	if (ft_strcmp("z", p->length) == 0)
+		z_flag(p, ap);
+	if (ft_strcmp("j", p->length) == 0)
+		j_flag(p, ap);
+	else
+		simple_di(p, ap);
 }
 
 void	put_long_d(t_printf *p, va_list ap)

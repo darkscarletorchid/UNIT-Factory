@@ -43,6 +43,14 @@ void	put_octal(t_printf *p, va_list ap);
 void	put_long_octal(t_printf *p, va_list ap);
 void	put_hex(t_printf *p, va_list ap);
 /*
+** h_flag.c
+*/
+void	h_flag(t_printf *p, va_list ap);
+void	hh_flag(t_printf *p, va_list ap);
+void	ll_flag(t_printf *p, va_list ap);
+void	z_flag(t_printf *p, va_list ap);
+void	j_flag(t_printf *p, va_list ap);
+/*
 ** unsigned.c
 */
 void	put_unsigned_i(t_printf *p, va_list ap);
@@ -52,6 +60,9 @@ void	put_unsigned_long_i(t_printf *p, va_list ap);
 */
 void	put_string(t_printf *p, va_list ap);
 void	put_char(t_printf *p, va_list ap);
+void	put_wide_str(t_printf *p, va_list ap);
+void	put_wide_char(t_printf *p, va_list ap);
+void	put_pointer(t_printf *p, va_list ap);
 /*
 ** other.c
 */

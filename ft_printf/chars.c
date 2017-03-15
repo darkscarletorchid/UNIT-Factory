@@ -14,8 +14,8 @@
 
 void	put_string(t_printf *p, va_list ap)
 {
-	int len;
-	char *s;
+	int		len;
+	char	*s;
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
@@ -26,7 +26,9 @@ void	put_string(t_printf *p, va_list ap)
 		add_width(p, len);
 }
 
-void put_char(t_printf *p, va_list ap)
+//void	put_wide_str(t_printf *p, va_list ap);
+
+void	put_char(t_printf *p, va_list ap)
 {
 	char c;
 
@@ -37,3 +39,6 @@ void put_char(t_printf *p, va_list ap)
 	if (p->minus == 1)
 		add_width(p, 1);
 }
+
+//void	put_wide_char(t_printf *p, va_list ap);
+//void	put_pointer(t_printf *p, va_list ap);

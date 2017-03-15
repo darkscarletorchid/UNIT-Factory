@@ -45,8 +45,9 @@ int main()
 //	int c = ft_printf("fopojjoij%25s llll %6D %3d\n", "kokokkokokoko", t, f);
 //	int p = printf("fopojjoij%25s llll %6ld%+4d\n", "kokokkokokoko", t, f);
 	//
-	int c = ft_printf("fopojjoij %-20c\n", 'a');
-	int p = printf("fopojjoij %-20c\n", 'a');
+	signed char b = 'a';
+	int c = ft_printf("fopojjoij %hhd\n", b);
+	int p = printf("fopojjoij %hhd\n", b);
 	printf("\n%d\n", c);
 	printf("\n%d\n", p);
 	return (0);
