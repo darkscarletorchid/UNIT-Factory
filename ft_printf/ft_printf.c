@@ -23,10 +23,7 @@ int		ft_printf(const char *format, ...)
 		if (*str == '%')
 		{
 			str++;
-			if (*str == '%')
-				c_putchar(*str);
-			else
-				str += check_conversion(str, ap);
+			str += check_conversion(str, ap);
 		}
 		c_putchar(*str);
 		str++;
@@ -35,20 +32,22 @@ int		ft_printf(const char *format, ...)
 	return (count);
 }
 
-int main()
-{
-	//int d = 2665;
-	unsigned long int t = 4559898552222;
-	//int t = 100;
-	char f = 'A';
-
+//int main()
+//{
+//	//int d = 2665;
+//	unsigned long int t = 4559898552222;
+//	//int t = 100;
+//	char f = 'A';
+//
 //	int c = ft_printf("fopojjoij%25s llll %6D %3d\n", "kokokkokokoko", t, f);
 //	int p = printf("fopojjoij%25s llll %6ld%+4d\n", "kokokkokokoko", t, f);
-	//
-	signed char b = 'a';
-	int c = ft_printf("fopojjoij %hhd\n", b);
-	int p = printf("fopojjoij %hhd\n", b);
-	printf("\n%d\n", c);
-	printf("\n%d\n", p);
-	return (0);
-}
+//	//
+//	long int b = 2626262626262;
+//	const char A[] = "this is tEEEEst!";
+//
+//	int c = ft_printf("\t|%012i|\t|%-12i|\t|%012i|",-42,42,42);
+//	int p = printf("\t|%012i|\t|%-12i|\t|%012i|",-42,42,42);
+//	printf("\n%d\n", c);
+//	printf("\n%d\n", p);
+//	return (0);
+//}

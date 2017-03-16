@@ -29,6 +29,8 @@ void	flags(t_printf *p)
 			p->sharp = 2;
 		else if (*s == ' ')
 			p->space = 1;
+		else if (*s == '.')
+			break ;
 		s++;
 	}
 }
@@ -58,6 +60,7 @@ void	parse_arg(t_printf *p)
 	while (ft_strchr("+-0# ", *s) && *s)
 		++s;
 	p->width = ft_atoi(s);
+	p->precision = -1;
 	while (*s)
 	{
 		if (*s == '.')
@@ -70,16 +73,27 @@ void	parse_arg(t_printf *p)
 	length_flags(p, s);
 }
 
+void	null_struct(t_printf *p)
+{
+	p->sharp = 0;
+	p->zero = 0;
+	p->minus = 0;
+	p->plus = 0;
+	p->space = 0;
+	p->width = 0;
+	p->precision = 0;
+}
 int		check_conversion(char *format, va_list ap)
 {
 	size_t		i;
 	t_printf	p;
 
 	i = 0;
+	null_struct(&p);
 	p.convers = '0';
 	while (format[i])
 	{
-		if (ft_strchr("sSpdDioOuUxXcC", format[i]))
+		if (ft_strchr("sSpdDioOuUxXcC%", format[i]))
 		{
 			p.convers = format[i];
 			break ;

@@ -8,7 +8,7 @@
 # include <stdarg.h>
 # include <stdio.h>
 # include <unistd.h>
-
+# include <wchar.h>
 int count;
 
 typedef struct	s_printf
@@ -43,13 +43,28 @@ void	put_octal(t_printf *p, va_list ap);
 void	put_long_octal(t_printf *p, va_list ap);
 void	put_hex(t_printf *p, va_list ap);
 /*
-** h_flag.c
+** flagged_decimals.c
 */
 void	h_flag(t_printf *p, va_list ap);
 void	hh_flag(t_printf *p, va_list ap);
 void	ll_flag(t_printf *p, va_list ap);
 void	z_flag(t_printf *p, va_list ap);
 void	j_flag(t_printf *p, va_list ap);
+/*
+** flagged_base.c
+*/
+void	h_flag3(t_printf *p, va_list ap, int base);
+void	hh_flag3(t_printf *p, va_list ap, int base);
+void	ll_flag3(t_printf *p, va_list ap, int base);
+void	z_flag3(t_printf *p, va_list ap, int base);
+void	j_flag3(t_printf *p, va_list ap, int base);
+void	l_flag3(t_printf *p, va_list ap, int base);
+
+void	h_flag2(t_printf *p, va_list ap);
+void	hh_flag2(t_printf *p, va_list ap);
+void	ll_flag2(t_printf *p, va_list ap);
+void	z_flag2(t_printf *p, va_list ap);
+void	j_flag2(t_printf *p, va_list ap);
 /*
 ** unsigned.c
 */
@@ -60,12 +75,14 @@ void	put_unsigned_long_i(t_printf *p, va_list ap);
 */
 void	put_string(t_printf *p, va_list ap);
 void	put_char(t_printf *p, va_list ap);
-void	put_wide_str(t_printf *p, va_list ap);
-void	put_wide_char(t_printf *p, va_list ap);
+void	put_string_unicode(t_printf *p, va_list ap);
 void	put_pointer(t_printf *p, va_list ap);
 /*
 ** other.c
 */
 void	print_spaces(t_printf *p, int len);
 void	add_width(t_printf *p, int len);
+
+
+char *get_str(wint_t *str);
 #endif

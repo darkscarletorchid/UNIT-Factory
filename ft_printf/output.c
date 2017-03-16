@@ -4,6 +4,15 @@
 
 #include "ft_printf.h"
 
+void	put_percent(t_printf *p)
+{
+	if (p->minus != 1)
+		print_spaces(p, 1);
+	c_putchar('%');
+	if (p->minus == 1)
+		print_spaces(p, 1);
+}
+
 void	put_arg(t_printf *p, va_list ap)
 {
 	if (p->convers == 'd' || p->convers == 'i')
@@ -22,13 +31,12 @@ void	put_arg(t_printf *p, va_list ap)
 		put_unsigned_long_i(p, ap);
 	else if (p->convers == 's')
 		put_string(p, ap);
-	else if (p->convers == 'c')
+	else if (p->convers == 'c' || p->convers == 'C')
 		put_char(p, ap);
-/*-********************************************************-*/
-//	else if (p.convers == 'S')
-//		c_putstr(va_arg(ap, char *)); UNICODE CHARS
-//	else if (p.convers == 'C')
-//		c_putstr(va_arg(ap, char *)); UNICODE CHARS
-//	else if (p.convers == 'p')
-//		c_putstr(va_arg(ap, char *)); pointer to address
+	else if (p->convers == 'S')
+		put_string_unicode(p, ap);
+	else if (p->convers == 'p')
+		put_pointer(p, ap);
+	else if (p->convers == '%')
+		put_percent(p);
 }
