@@ -4,7 +4,7 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "libft/libft.h"
+# include "libft.h"
 # include <stdarg.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -28,12 +28,12 @@ typedef struct	s_printf
 
 
 void	c_putchar(char c);
-void	c_putnbr(long nb);
+void	c_putnbr(unsigned long long nb);
 void	c_putstr(char *str);
 int	check_conversion(char *format, va_list ap);
 
 void	put_arg(t_printf *p, va_list ap);
-
+void	put_char_unicode(t_printf *p, va_list ap);
 /*
 ** decimal.c
 */
@@ -83,6 +83,6 @@ void	put_pointer(t_printf *p, va_list ap);
 void	print_spaces(t_printf *p, int len);
 void	add_width(t_printf *p, int len);
 
-
+void	number_zero(t_printf *p);
 char *get_str(wint_t *str);
 #endif

@@ -8,31 +8,47 @@ void	unflagged_octal(t_printf *p, va_list ap)
 
 	int		len;
 	long int	nb;
+	int w;
+	int prec;
 	char	*s;
-	int		zero;
 	int 	i;
+	int flag;
 
-	zero = 0;
 	nb = va_arg(ap, unsigned int);
 	s = ft_itoa_base(nb, 8);
-	len = (int) ft_strlen(s);
-	if (nb != 0 && p->sharp == 2)
-		len++;
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	if (nb != 0 && p->sharp == 2)
-		c_putstr("0");
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putstr(s);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
-
-
-
+	len = ft_strlen(s);
+	prec = 0;
+	if (nb == 0)
+		number_zero(p);
+	else {
+		flag = p->sharp == 2 ? 1 : 0;
+		if (p->precision >= len)
+			prec = p->precision - len - flag;
+		w = p->width - prec - len - flag;
+		while (w > 0 && p->minus != 1 &&
+			   (p->zero != 1 || (p->zero == 1 && p->precision > 0))) {
+			c_putchar(' ');
+			w--;
+		}
+		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0) {
+			c_putchar('0');
+			w--;
+		}
+		i = -1;
+		while (++i < prec)
+			c_putchar('0');
+		if (flag)
+			c_putstr("0");
+		c_putstr(s);
+		while (w > 0 && p->minus == 1) {
+			c_putchar(' ');
+			w--;
+		}
+		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0) {
+			c_putchar('0');
+			w--;
+		}
+	}
 }
 
 void	put_octal(t_printf *p, va_list ap)
@@ -61,25 +77,45 @@ void	put_long_octal(t_printf *p, va_list ap)
 	int			len;
 	long int	nb;
 	char		*s;
-	int		zero;
+	int		prec;
+	int		flag;
+	int w;
 	int 	i;
 
 	nb = va_arg(ap, long int);
-	zero = 0;
 	s = ft_itoa_base(nb, 8);
-	len = (int)ft_strlen(s);
-	if (nb != 0 && p->sharp == 2)
-		len++;
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	if (nb != 0 && p->sharp == 2)
-		c_putstr("0");
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putstr(s);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
+	len = ft_strlen(s);
+	prec = 0;
+	if (nb == 0)
+		number_zero(p);
+	else {
+		flag = p->sharp == 2 ? 1 : 0;
+		if (p->precision >= len)
+			prec = p->precision - len - flag;
+		w = p->width - prec - len - flag;
+		while (w > 0 && p->minus != 1 &&
+			   (p->zero != 1 || (p->zero == 1 && p->precision > 0))) {
+			c_putchar(' ');
+			w--;
+		}
+		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0) {
+			c_putchar('0');
+			w--;
+		}
+		i = -1;
+		while (++i < prec)
+			c_putchar('0');
+		if (flag)
+			c_putstr("0");
+		c_putstr(s);
+		while (w > 0 && p->minus == 1) {
+			c_putchar(' ');
+			w--;
+		}
+		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0) {
+			c_putchar('0');
+			w--;
+		}
+	}
+
 }

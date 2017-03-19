@@ -31,8 +31,10 @@ void	put_arg(t_printf *p, va_list ap)
 		put_unsigned_long_i(p, ap);
 	else if (p->convers == 's')
 		put_string(p, ap);
-	else if (p->convers == 'c' || p->convers == 'C')
+	else if (p->convers == 'c')
 		put_char(p, ap);
+	else if (p->convers == 'C')
+		put_char_unicode(p, ap);
 	else if (p->convers == 'S')
 		put_string_unicode(p, ap);
 	else if (p->convers == 'p')

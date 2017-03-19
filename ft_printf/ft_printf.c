@@ -15,18 +15,26 @@
 int		ft_printf(const char *format, ...)
 {
 	va_list ap;
+	int len;
+	int i;
 
+	i = 0;
 	va_start(ap, format);
 	char *str = (char *)format;
-	while (*str)
+	len = ft_strlen(str);
+	while (str[i] && i < len)
 	{
-		if (*str == '%')
+		if (str[i] == '%')
 		{
-			str++;
-			str += check_conversion(str, ap);
+			i++;
+			i += check_conversion(str + i, ap);
 		}
-		c_putchar(*str);
-		str++;
+		else
+		{
+			c_putchar(str[i]);
+			i++;
+		}
+
 	}
 	va_end(ap);
 	return (count);
@@ -35,18 +43,18 @@ int		ft_printf(const char *format, ...)
 //int main()
 //{
 //	//int d = 2665;
-//	unsigned long int t = 4559898552222;
-//	//int t = 100;
-//	char f = 'A';
+////	unsigned long int t = 4559898552222;
+////	//int t = 100;
+////	char f = 'A';
+////
+////	int c = ft_printf("fopojjoij%25s llll %6D %3d\n", "kokokkokokoko", t, f);
+////	int p = printf("fopojjoij%25s llll %6ld%+4d\n", "kokokkokokoko", t, f);
+////	//
+////	long int b = 2626262626262;
+////	const char A[] = "this is tEEEEst!";
 //
-//	int c = ft_printf("fopojjoij%25s llll %6D %3d\n", "kokokkokokoko", t, f);
-//	int p = printf("fopojjoij%25s llll %6ld%+4d\n", "kokokkokokoko", t, f);
-//	//
-//	long int b = 2626262626262;
-//	const char A[] = "this is tEEEEst!";
-//
-//	int c = ft_printf("\t|%012i|\t|%-12i|\t|%012i|",-42,42,42);
-//	int p = printf("\t|%012i|\t|%-12i|\t|%012i|",-42,42,42);
+//	int c = ft_printf("%d%10%des%s\n",100, "Ly");
+//	int p = printf("%d%10%des%s\n",100, "Ly");
 //	printf("\n%d\n", c);
 //	printf("\n%d\n", p);
 //	return (0);

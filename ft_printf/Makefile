@@ -6,11 +6,11 @@
 #    By: atrepyto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/29 10:36:01 by atrepyto          #+#    #+#              #
-#    Updated: 2017/03/15 14:09:55 by atrepyto         ###   ########.fr        #
+#    Updated: 2017/03/17 18:04:42 by atrepyto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME = libftprintf.a
 
 SRC = ./ft_atoi.c ./ft_bzero.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c \
 	  ./ft_isdigit.c ./ft_isprint.c ./ft_itoa.c ./ft_memalloc.c ./ft_memccpy.c \
@@ -26,7 +26,10 @@ SRC = ./ft_atoi.c ./ft_bzero.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c \
 	  ./ft_lstdel.c ./ft_lstadd.c ./ft_lstdelone.c ./ft_lstiter.c ./ft_lstmap.c \
 	  ./ft_lstnew.c ./ft_strrev.c ./ft_swap.c ./ft_uppercase.c ./ft_lowercase.c \
 	  ./ft_strlcpy.c ./ft_replacechr.c ./ft_strndup.c ./get_next_line.c \
-	  ./ft_isspace.c ./ft_atof.c ./ft_itoa_base.c ./ft_nblen.c
+	  ./ft_isspace.c ./ft_atof.c ./ft_itoa_base.c ./ft_nblen.c \
+	  ./chars.c ./conversion.c ./decimals.c ./flagged_base.c \
+	  ./flagged_decimals.c ./widechr.c ./flagged_unsigned.c ./ft_printf.c \
+	  ./output.c ./pointer.c ./printf_lib.c ./unsigned.c ./other.c ./wide_chars.c ./octal.c ./hex.c 
 
 OBJ = $(SRC:.c=.o)	
 
@@ -41,9 +44,9 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
 
-%.o: %.c
-	@$(CC) $(FLG) -I $(INC) -c $< -o $@
-	
+$(OBG):
+	@$(CC) $(FLG) -I $(INC) $(SRC)
+
 clean:
 	@rm -rf $(OBJ)
 

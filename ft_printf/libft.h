@@ -6,7 +6,7 @@
 /*   By: atrepyto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 10:45:27 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/09 19:16:47 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/16 11:49:07 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # define BUFF_SIZE 1000
+# include "ft_printf.h"
 
 typedef struct		s_list
 {

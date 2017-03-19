@@ -1,111 +1,81 @@
 #include "ft_printf.h"
 
+
+void 	uns_smth(t_printf  *p, unsigned long long int nb)
+{
+	int			len;
+	int			prec;
+	int 		w;
+	int			i;
+
+	len = unsigned_nblen(nb, 10);
+	prec = 0;
+	if (nb == 0)
+		number_zero(p);
+	else {
+		if (p->precision >= len) {
+			prec = p->precision - len;
+		}
+		w = p->width - prec - len;
+		while (w > 0 && p->minus != 1 &&
+			   (p->zero != 1 || (p->zero == 1 && p->precision > 0))) {
+			c_putchar(' ');
+			w--;
+		}
+		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0) {
+			c_putchar('0');
+			w--;
+		}
+		i = -1;
+		while (++i < prec)
+			c_putchar('0');
+		c_putnbr(nb);
+		while (w > 0 && p->minus == 1) {
+			c_putchar(' ');
+			w--;
+		}
+		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0) {
+			c_putchar('0');
+			w--;
+		}
+	}
+}
 void	h_flag2(t_printf *p, va_list ap)
 {
-	int					len;
 	unsigned short int	nb;
-	int zero;
-	int i;
 
 	nb = (unsigned short)va_arg(ap, int);
-	zero = 0;
-	len = unsigned_nblen(nb, 10);
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putnbr(nb);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
+	uns_smth(p, nb);
 }
 
 void	hh_flag2(t_printf *p, va_list ap)
 {
-	int			len;
 	unsigned char	nb;
-	int zero;
-	int i;
 
 	nb = (unsigned char)va_arg(ap, int);
-	zero = 0;
-	len = unsigned_nblen(nb, 10);
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putnbr(nb);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
+	uns_smth(p, nb);
 }
 
 void	ll_flag2(t_printf *p, va_list ap)
 {
-	int					len;
 	unsigned long long	nb;
-	int zero;
-	int i;
 
 	nb = va_arg(ap, unsigned long long);
-	zero = 0;
-	len = unsigned_nblen(nb, 10);
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putnbr(nb);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
+	uns_smth(p, nb);
 }
 
 void	z_flag2(t_printf *p, va_list ap)
 {
-	int		len;
 	size_t	nb;
-	int zero;
-	int i;
 
 	nb = va_arg(ap, size_t);
-	zero = 0;
-	len = unsigned_nblen(nb, 10);
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putnbr(nb);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
+	uns_smth(p, nb);
 }
 
 void	j_flag2(t_printf *p, va_list ap)
 {
-	int			len;
 	intmax_t	nb;
-	int zero;
-	int i;
 
 	nb = va_arg(ap, intmax_t);
-	zero = 0;
-	len = unsigned_nblen(nb, 10);
-	if (len < p->precision)
-		zero = p->precision - len;
-	if (p->minus != 1)
-		print_spaces(p, len + zero);
-	i = -1;
-	while (++i < zero)
-		c_putchar('0');
-	c_putnbr(nb);
-	if (p->minus == 1)
-		print_spaces(p, len + zero);
+	uns_smth(p, nb);
 }

@@ -65,7 +65,6 @@ int		wide_strlen(wint_t *str)
 
 char *get_str(wint_t *str)
 {
-	int i;
 	char *dest;
 
 	if (!str) {

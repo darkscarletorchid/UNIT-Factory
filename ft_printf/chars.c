@@ -24,7 +24,8 @@ void	null_string(t_printf *p, char *s)
 		c_putstr(s);
 		if (p->minus == 1)
 			print_spaces(p, len);
-	} else {
+	}
+	else {
 		len = p->precision;
 		if (p->minus != 1)
 			print_spaces(p, len);
@@ -58,7 +59,7 @@ void	exist_str(t_printf *p, char *s)
 		if (p->minus != 1)
 			print_spaces(p, len);
 		i = -1;
-		while (++i < len)
+		while (++i < len && s[i])
 			c_putchar(s[i]);
 		if (p->minus == 1)
 			print_spaces(p, len);
@@ -76,6 +77,61 @@ void	put_string(t_printf *p, va_list ap)
 		exist_str(p, s);
 }
 
+
+int 	charlen(wint_t c)
+{
+	int len;
+
+	if (c <= 0x7F)
+		len = 1;
+	else if (c <= 0x7FF)
+		len = 2;
+	else if (c <= 0xFFFF)
+		len = 3;
+	else if (c <= 0x10FFFF)
+		len = 4;
+	return  (len);
+}
+void	exist_str_unicode(t_printf *p, char *s, wint_t *str)
+{
+	int len;
+	int i;
+	int j;
+	int cl = 0;
+	int temp = 0;
+
+	if (p->precision < 0)
+	{
+		len = ft_strlen(s);
+		if (p->minus != 1)
+			print_spaces(p, len);
+		c_putstr(s);
+		if (p->minus == 1)
+			print_spaces(p, len);
+	}
+	else
+	{
+		len = ft_strlen(s);
+		if (len > p->precision)
+			len = p->precision;
+		if (p->minus != 1)
+			print_spaces(p, len);
+		i = -1;
+		j = 0;
+		while (cl < len && str[j])
+		{
+			temp += charlen(str[j]);
+			if (temp <= len)
+				cl = temp;
+			j++;
+		}
+		while (++i < cl && s[i])
+			c_putchar(s[i]);
+		if (p->minus == 1)
+			print_spaces(p, cl);
+	}
+}
+
 void	put_string_unicode(t_printf *p, va_list ap)
 {
 	wint_t	*s;
@@ -83,10 +139,10 @@ void	put_string_unicode(t_printf *p, va_list ap)
 
 	s = va_arg(ap, wint_t *);
 	str = get_str(s);
-	if (!str)
-		null_string(p, str);
+	if (!s)
+		null_string(p, "(null)");
 	else
-		exist_str(p, str);
+		exist_str_unicode(p, str, s);
 }
 
 void	put_char(t_printf *p, va_list ap)
