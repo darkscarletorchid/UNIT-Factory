@@ -14,17 +14,23 @@
 
 int		ft_printf(const char *format, ...)
 {
-	va_list ap;
-	int len;
-	int i;
+	va_list	ap;
+	int		len;
+	int		i;
+	char	*str;
 
 	i = 0;
 	va_start(ap, format);
-	char *str = (char *)format;
+	str = (char *)format;
 	len = ft_strlen(str);
 	while (str[i] && i < len)
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && str[i + 1] == '%')
+		{
+			c_putchar(str[i]);
+			i += 2;
+		}
+		else if (str[i] == '%')
 		{
 			i++;
 			i += check_conversion(str + i, ap);
@@ -34,7 +40,6 @@ int		ft_printf(const char *format, ...)
 			c_putchar(str[i]);
 			i++;
 		}
-
 	}
 	va_end(ap);
 	return (count);
@@ -53,8 +58,9 @@ int		ft_printf(const char *format, ...)
 ////	long int b = 2626262626262;
 ////	const char A[] = "this is tEEEEst!";
 //
-//	int c = ft_printf("%d%10%des%s\n",100, "Ly");
-//	int p = printf("%d%10%des%s\n",100, "Ly");
+//	//int c = ft_printf("%d dff%C ffdsf%s dsfewf%d wefwef%u wef%X efwww%c\n", 100, 'a', "qwerty", -56, 8885, 26, 'a');
+//	int c = ft_printf("%- 3w", 10);
+//	int p = printf("%- 3w", 10);
 //	printf("\n%d\n", c);
 //	printf("\n%d\n", p);
 //	return (0);

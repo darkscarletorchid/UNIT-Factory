@@ -32,20 +32,25 @@ void	put_pointer(t_printf *p, va_list ap)
 	}
 	else
 	{
-		if (p->precision == 0) {
+		if (p->precision == 0)
+		{
 			if (p->minus != 1)
 				add_width(p, 2);
 			c_putstr("0x");
 			if (p->minus == 1)
 				add_width(p, 2);
-		} else if (p->precision < 0) {
+		}
+		else if (p->precision < 0)
+		{
 			len = 1;
 			if (p->minus != 1)
 				add_width(p, len + 2);
 			c_putstr("0x0");
 			if (p->minus == 1)
 				add_width(p, len + 2);
-		} else if (p->precision > 0) {
+		}
+		else if (p->precision > 0)
+		{
 			len = p->precision;
 			if (p->minus != 1)
 				add_width(p, len + 2);

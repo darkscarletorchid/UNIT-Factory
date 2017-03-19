@@ -28,11 +28,6 @@ void	c_putstr(char *str)
 
 void	c_putnbr(unsigned long long int nb)
 {
-//	if (nb < 0) {
-//		write(1, "-", 1);
-//		count++;
-//		nb = -nb;
-//	}
 	if (nb >= 10) {
 		c_putnbr(nb / 10);
 		c_putnbr(nb % 10);

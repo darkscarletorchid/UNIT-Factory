@@ -6,6 +6,8 @@
 
 void				wint_convert_c(wint_t c)
 {
+	if (c <= 0x7F)
+		c_putchar(c);
 	if (c <= 0x7FF)
 	{
 		c_putchar((char)(((c & 0x07c0) >> 6) + 0xc0));

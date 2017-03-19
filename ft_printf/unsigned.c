@@ -14,11 +14,11 @@
 
 void unflagged_uint(t_printf *p, va_list ap)
 {
-	int			len;
+	int				len;
 	unsigned int	nb;
-	int			prec;
-	int 		w;
-	int			i;
+	int				prec;
+	int 			w;
+	int				i;
 
 	nb = va_arg(ap, unsigned int);
 	len = unsigned_nblen(nb, 10);
@@ -28,9 +28,7 @@ void unflagged_uint(t_printf *p, va_list ap)
 	else
 	{
 		if (p->precision >= len)
-		{
 			prec = p->precision - len;
-		}
 		w = p->width - prec - len;
 		while (w > 0 && p->minus != 1 && (p->zero != 1 || (p->zero == 1 && p->precision >0)))
 		{
@@ -49,11 +47,6 @@ void unflagged_uint(t_printf *p, va_list ap)
 		while (w > 0 && p->minus == 1)
 		{
 			c_putchar(' ');
-			w--;
-		}
-		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
 			w--;
 		}
 	}
@@ -82,10 +75,10 @@ void	put_unsigned_i(t_printf *p, va_list ap)
 
 void	put_unsigned_long_i(t_printf *p, va_list ap)
 {
-	int			len;
-	int			prec;
-	int 		w;
-	int			i;
+	int					len;
+	int					prec;
+	int 				w;
+	int					i;
 	unsigned long int	nb;
 
 	nb = va_arg(ap, unsigned long int);
@@ -96,11 +89,10 @@ void	put_unsigned_long_i(t_printf *p, va_list ap)
 	else
 	{
 		if (p->precision >= len)
-		{
 			prec = p->precision - len;
-		}
 		w = p->width - prec - len;
-		while (w > 0 && p->minus != 1 && (p->zero != 1 || (p->zero == 1 && p->precision >0)))
+		while (w > 0 && p->minus != 1 && (p->zero != 1 ||
+				(p->zero == 1 && p->precision >0)))
 		{
 			c_putchar(' ');
 			w--;
@@ -117,11 +109,6 @@ void	put_unsigned_long_i(t_printf *p, va_list ap)
 		while (w > 0 && p->minus == 1)
 		{
 			c_putchar(' ');
-			w--;
-		}
-		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
 			w--;
 		}
 	}

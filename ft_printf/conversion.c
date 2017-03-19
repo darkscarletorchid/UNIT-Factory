@@ -46,18 +46,14 @@ void	length_flags(t_printf *p, char *s)
 		if (ft_strchr("hljz", s[j]))
 		{
 			i = j;
-			while(!ft_strchr("sSpdDioOuUxXcC%", s[i]))
+			while (!ft_strchr("sSpdDioOuUxXcC%", s[i]))
 				i++;
-			//if (*(s + 1) == 'h' || *(s + 1) == 'l')
-			//	p->length = ft_strsub(s, 0, 2);
 			if (s[j] == 'l' && i > 1)
 				p->length = ft_strdup("ll");
 			else if (s[j] == 'h' && i > 1)
 				p->length = ft_strdup("hh");
 			else
 				p->length = ft_strsub(s, 0, i);
-			//else
-			//	p->length = ft_strsub(s, 0, 1);
 			break ;
 		}
 		j++;
@@ -101,6 +97,7 @@ void	null_struct(t_printf *p)
 	p->width = 0;
 	p->precision = 0;
 }
+
 int		check_conversion(char *format, va_list ap)
 {
 	size_t		i;
@@ -109,6 +106,8 @@ int		check_conversion(char *format, va_list ap)
 	i = 0;
 	null_struct(&p);
 	p.convers = '0';
+	if (format[i] == '\0')
+		p.arg = ft_strnew(0);
 	while (format[i])
 	{
 		if (ft_strchr("%sSpdDioOuUxXcC", format[i]))
@@ -119,12 +118,8 @@ int		check_conversion(char *format, va_list ap)
 		}
 		i++;
 	}
-/*
-** if (p.convers == '0')
-**		undefined_behaviour(); UNDEFINED BEHAVIOUR if conversion not found
-*/
+
 	p.arg = ft_strsub(format, 0, i);
-//	printf("arg %s\n", p.arg);
 	parse_arg(&p);
 	put_arg(&p, ap);
 	return (ft_strlen(p.arg));

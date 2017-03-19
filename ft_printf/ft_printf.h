@@ -28,12 +28,12 @@ typedef struct	s_printf
 
 
 void	c_putchar(char c);
-void	c_putnbr(unsigned long long nb);
+void	c_putnbr(unsigned long long int nb);
 void	c_putstr(char *str);
 int	check_conversion(char *format, va_list ap);
 
 void	put_arg(t_printf *p, va_list ap);
-void	put_char_unicode(t_printf *p, va_list ap);
+
 /*
 ** decimal.c
 */
@@ -82,7 +82,15 @@ void	put_pointer(t_printf *p, va_list ap);
 */
 void	print_spaces(t_printf *p, int len);
 void	add_width(t_printf *p, int len);
-
 void	number_zero(t_printf *p);
+
 char *get_str(wint_t *str);
+void	put_char_unicode(t_printf *p, va_list ap);
+
+void	base_output(t_printf *p, unsigned long long nb, int base);
+void	output_octal(t_printf *p, unsigned long long nb, int base);
+void 	output_int(long long int nb, t_printf *p);
+int		wide_strlen(wint_t *str);
+void				wint_convert_c(wint_t c);
+char				*convert_to_char(char *dest, wint_t *str);
 #endif

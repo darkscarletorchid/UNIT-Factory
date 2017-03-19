@@ -18,11 +18,13 @@ void 	uns_smth(t_printf  *p, unsigned long long int nb)
 		}
 		w = p->width - prec - len;
 		while (w > 0 && p->minus != 1 &&
-			   (p->zero != 1 || (p->zero == 1 && p->precision > 0))) {
+			   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+		{
 			c_putchar(' ');
 			w--;
 		}
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0) {
+		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
+		{
 			c_putchar('0');
 			w--;
 		}
@@ -30,11 +32,13 @@ void 	uns_smth(t_printf  *p, unsigned long long int nb)
 		while (++i < prec)
 			c_putchar('0');
 		c_putnbr(nb);
-		while (w > 0 && p->minus == 1) {
+		while (w > 0 && p->minus == 1)
+		{
 			c_putchar(' ');
 			w--;
 		}
-		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0) {
+		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0)
+		{
 			c_putchar('0');
 			w--;
 		}

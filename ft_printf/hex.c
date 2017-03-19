@@ -6,26 +6,34 @@
 void	unflagged_hex(t_printf *p, va_list ap)
 {
 	long int		nb;
+
+	nb = va_arg(ap, unsigned int);
+	base_output(p, nb, 16);
+}
+
+void	base_output(t_printf *p, unsigned long long nb, int base)
+{
 	int		len;
 	char	*s;
 	int 	prec;
-	int w;
-	int flag;
+	int		w;
+	int		flag;
 	int 	i;
 
-	nb = va_arg(ap, unsigned int);
-	s = ft_itoa_base(nb, 16);
+	s = ft_itoa_base(nb, base);
 	len = ft_strlen(s);
 	prec = 0;
 	if (nb == 0)
 		number_zero(p);
-	else {
+	else
+	{
 		flag = p->sharp == 2 ? 2 : 0;
 		if (p->precision >= len)
 			prec = p->precision - len;
 		w = p->width - prec - len - flag;
 		while (w > 0 && p->minus != 1 &&
-			   (p->zero != 1 || (p->zero == 1 && p->precision > 0))) {
+			   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+		{
 			c_putchar(' ');
 			w--;
 		}
@@ -33,7 +41,8 @@ void	unflagged_hex(t_printf *p, va_list ap)
 			c_putstr("0x");
 		else if (flag && p->convers == 'X')
 			c_putstr("0X");
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0) {
+		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
+		{
 			c_putchar('0');
 			w--;
 		}
@@ -43,11 +52,13 @@ void	unflagged_hex(t_printf *p, va_list ap)
 		if (p->convers == 'x')
 			ft_lowercase(s);
 		c_putstr(s);
-		while (w > 0 && p->minus == 1) {
+		while (w > 0 && p->minus == 1)
+		{
 			c_putchar(' ');
 			w--;
 		}
-		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0) {
+		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0)
+		{
 			c_putchar('0');
 			w--;
 		}
@@ -65,7 +76,7 @@ void	put_hex(t_printf *p, va_list ap)
 		else if (ft_strcmp("l", p->length) == 0)
 			l_flag3(p, ap, 16);
 		else if (ft_strcmp("ll", p->length) == 0)
-			ll_flag3(p, ap, 16);
+			l_flag3(p, ap, 16);
 		else if (ft_strcmp("z", p->length) == 0)
 			z_flag3(p, ap, 16);
 		else if (ft_strcmp("j", p->length) == 0)

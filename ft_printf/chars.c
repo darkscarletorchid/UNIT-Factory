@@ -17,7 +17,8 @@ void	null_string(t_printf *p, char *s)
 	int len;
 	int i;
 
-	if (p->precision < 0) {
+	if (p->precision < 0)
+	{
 		len = ft_strlen(s);
 		if (p->minus != 1)
 			print_spaces(p, len);
@@ -25,7 +26,8 @@ void	null_string(t_printf *p, char *s)
 		if (p->minus == 1)
 			print_spaces(p, len);
 	}
-	else {
+	else
+	{
 		len = p->precision;
 		if (p->minus != 1)
 			print_spaces(p, len);
@@ -72,13 +74,12 @@ void	put_string(t_printf *p, va_list ap)
 
 	s = va_arg(ap, char *);
 	if (s == NULL)
-		null_string(p, ft_strdup("(null)"));
+		null_string(p, "(null)");
 	else
 		exist_str(p, s);
 }
 
-
-int 	charlen(wint_t c)
+int		charlen(wint_t c)
 {
 	int len;
 
@@ -90,15 +91,16 @@ int 	charlen(wint_t c)
 		len = 3;
 	else if (c <= 0x10FFFF)
 		len = 4;
-	return  (len);
+	return (len);
 }
+
 void	exist_str_unicode(t_printf *p, char *s, wint_t *str)
 {
 	int len;
 	int i;
 	int j;
-	int cl = 0;
-	int temp = 0;
+	int cl;
+	int temp;
 
 	if (p->precision < 0)
 	{
@@ -118,6 +120,8 @@ void	exist_str_unicode(t_printf *p, char *s, wint_t *str)
 			print_spaces(p, len);
 		i = -1;
 		j = 0;
+		temp = 0;
+		cl = 0;
 		while (cl < len && str[j])
 		{
 			temp += charlen(str[j]);
@@ -156,4 +160,3 @@ void	put_char(t_printf *p, va_list ap)
 	if (p->minus == 1)
 		print_spaces(p, 1);
 }
-

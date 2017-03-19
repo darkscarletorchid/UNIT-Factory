@@ -4,7 +4,7 @@
 
 #include "ft_printf.h"
 
-void 	something(long long int nb, t_printf *p)
+void 	output_int(long long int nb, t_printf *p)
 {
 	int len;
 	int prec;
@@ -16,7 +16,8 @@ void 	something(long long int nb, t_printf *p)
 	len = nblen(nb, 10);
 	if (nb == 0)
 		number_zero(p);
-	else {
+	else
+	{
 		flag = nb < 0 ? 1 : 0;
 		if (p->precision >= len)
 			prec = p->precision - len + flag;
@@ -24,7 +25,8 @@ void 	something(long long int nb, t_printf *p)
 			len++;
 		w = p->width - prec - len;
 		while (w > 0 && p->minus != 1 &&
-			   (p->zero != 1 || (p->zero == 1 && p->precision > 0))) {
+			   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+		{
 			c_putchar(' ');
 			w--;
 		}
@@ -32,11 +34,13 @@ void 	something(long long int nb, t_printf *p)
 			c_putchar(' ');
 		if (p->plus == 1 && nb >= 0 && flag != 1)
 			c_putchar('+');
-		if (flag == 1) {
+		if (flag == 1)
+		{
 			c_putchar('-');
 			nb = -nb;
 		}
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0) {
+		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
+		{
 			c_putchar('0');
 			w--;
 		}
@@ -44,11 +48,13 @@ void 	something(long long int nb, t_printf *p)
 		while (++i < prec)
 			c_putchar('0');
 		c_putnbr(nb);
-		while (w > 0 && p->minus == 1) {
+		while (w > 0 && p->minus == 1)
+		{
 			c_putchar(' ');
 			w--;
 		}
-		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0) {
+		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0)
+		{
 			c_putchar('0');
 			w--;
 		}
@@ -57,19 +63,18 @@ void 	something(long long int nb, t_printf *p)
 
 void	h_flag(t_printf *p, va_list ap)
 {
-
 	short int	nb;
 
 	nb = (short)va_arg(ap, int);
-	something(nb, p);
-	}
+	output_int(nb, p);
+}
 
 void	hh_flag(t_printf *p, va_list ap)
 {
 	signed char	nb;
 
 	nb = (signed char)va_arg(ap, int);
-	something(nb, p);
+	output_int(nb, p);
 }
 
 void	ll_flag(t_printf *p, va_list ap)
@@ -77,7 +82,7 @@ void	ll_flag(t_printf *p, va_list ap)
 	long long int	nb;
 
 	nb = va_arg(ap, long long int);
-	something(nb, p);
+	output_int(nb, p);
 }
 
 void	z_flag(t_printf *p, va_list ap)
@@ -85,7 +90,7 @@ void	z_flag(t_printf *p, va_list ap)
 	size_t	nb;
 
 	nb = va_arg(ap, size_t);
-	something(nb, p);
+	output_int(nb, p);
 }
 
 void	j_flag(t_printf *p, va_list ap)
@@ -93,5 +98,5 @@ void	j_flag(t_printf *p, va_list ap)
 	intmax_t	nb;
 
 	nb = va_arg(ap, intmax_t);
-	something(nb, p);
+	output_int(nb, p);
 }

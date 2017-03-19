@@ -1,14 +1,35 @@
-//
-// Created by Anastasiia Trepyton on 3/15/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   output.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/19 11:12:16 by atrepyto          #+#    #+#             */
+/*   Updated: 2017/03/19 11:12:17 by atrepyto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
 void	put_percent(t_printf *p)
 {
+	int i = 0;
+
 	if (p->minus != 1)
 		print_spaces(p, 1);
-	c_putchar('%');
+	while (ft_strchr("-+.0123456789 hljz", p->arg[i]) && p->arg[i])
+		i++;
+	if (p->arg[i] == '%')
+		c_putchar('%');
+	else
+	{
+		while (p->arg[i] && p->arg[i] != '%')
+		{
+			c_putchar(p->arg[i]);
+			i++;
+		}
+	}
 	if (p->minus == 1)
 		print_spaces(p, 1);
 }
@@ -31,14 +52,15 @@ void	put_arg(t_printf *p, va_list ap)
 		put_unsigned_long_i(p, ap);
 	else if (p->convers == 's')
 		put_string(p, ap);
-	else if (p->convers == 'c')
+	else if (p->convers == 'c' || p->convers == 'C')
 		put_char(p, ap);
-	else if (p->convers == 'C')
-		put_char_unicode(p, ap);
 	else if (p->convers == 'S')
 		put_string_unicode(p, ap);
 	else if (p->convers == 'p')
 		put_pointer(p, ap);
-	else if (p->convers == '%')
+	else
+	{
+		//printf()
 		put_percent(p);
+	}
 }
