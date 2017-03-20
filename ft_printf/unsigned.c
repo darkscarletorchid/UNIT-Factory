@@ -12,47 +12,15 @@
 
 #include "ft_printf.h"
 
-void unflagged_uint(t_printf *p, va_list ap)
+void		unflagged_uint(t_printf *p, va_list ap)
 {
-	int				len;
-	unsigned int	nb;
-	int				prec;
-	int 			w;
-	int				i;
+	unsigned long long	nb;
 
 	nb = va_arg(ap, unsigned int);
-	len = unsigned_nblen(nb, 10);
-	prec = 0;
-	if (nb == 0)
-		number_zero(p);
-	else
-	{
-		if (p->precision >= len)
-			prec = p->precision - len;
-		w = p->width - prec - len;
-		while (w > 0 && p->minus != 1 && (p->zero != 1 || (p->zero == 1 && p->precision >0)))
-		{
-			c_putchar(' ');
-			w--;
-		}
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
-			w--;
-		}
-		i = -1;
-		while (++i < prec)
-			c_putchar('0');
-		c_putnbr(nb);
-		while (w > 0 && p->minus == 1)
-		{
-			c_putchar(' ');
-			w--;
-		}
-	}
+	output_unsigned(p, nb);
 }
 
-void	put_unsigned_i(t_printf *p, va_list ap)
+void		put_unsigned_i(t_printf *p, va_list ap)
 {
 	if (p->length && p->length[0] != '\0')
 	{
@@ -73,43 +41,47 @@ void	put_unsigned_i(t_printf *p, va_list ap)
 		unflagged_uint(p, ap);
 }
 
-void	put_unsigned_long_i(t_printf *p, va_list ap)
+void		put_unsigned_long_i(t_printf *p, va_list ap)
 {
-	int					len;
-	int					prec;
-	int 				w;
-	int					i;
-	unsigned long int	nb;
+	unsigned long long int	nb;
 
 	nb = va_arg(ap, unsigned long int);
-	len = unsigned_nblen(nb, 10);
-	prec = 0;
+	output_unsigned(p, nb);
+}
+
+static void	nonzero_unsigned(t_printf *p, unsigned long long nb)
+{
+	t_output o;
+
+	o.len = unsigned_nblen(nb, 10);
+	o.prec = p->precision >= o.len ? p->precision - o.len : 0;
+	o.w = p->width - o.prec - o.len;
+	while (o.w > 0 && p->minus != 1 &&
+		(p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+	{
+		c_putchar(' ');
+		o.w--;
+	}
+	while (o.w > 0 && p->minus != 1 && p->zero == 1)
+	{
+		c_putchar('0');
+		o.w--;
+	}
+	o.i = -1;
+	while (++o.i < o.prec)
+		c_putchar('0');
+	c_putnbr(nb);
+	while (o.w > 0 && p->minus == 1)
+	{
+		c_putchar(' ');
+		o.w--;
+	}
+}
+
+void		output_unsigned(t_printf *p, unsigned long long nb)
+{
 	if (nb == 0)
 		number_zero(p);
 	else
-	{
-		if (p->precision >= len)
-			prec = p->precision - len;
-		w = p->width - prec - len;
-		while (w > 0 && p->minus != 1 && (p->zero != 1 ||
-				(p->zero == 1 && p->precision >0)))
-		{
-			c_putchar(' ');
-			w--;
-		}
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
-			w--;
-		}
-		i = -1;
-		while (++i < prec)
-			c_putchar('0');
-		c_putnbr(nb);
-		while (w > 0 && p->minus == 1)
-		{
-			c_putchar(' ');
-			w--;
-		}
-	}
+		nonzero_unsigned(p, nb);
 }

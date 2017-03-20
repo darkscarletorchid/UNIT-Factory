@@ -6,7 +6,7 @@
 #    By: atrepyto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/29 10:36:01 by atrepyto          #+#    #+#              #
-#    Updated: 2017/03/17 18:04:42 by atrepyto         ###   ########.fr        #
+#    Updated: 2017/03/20 14:08:40 by atrepyto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC = ./ft_atoi.c ./ft_bzero.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c \
 	  ./ft_isspace.c ./ft_atof.c ./ft_itoa_base.c ./ft_nblen.c \
 	  ./chars.c ./conversion.c ./decimals.c ./flagged_base.c \
 	  ./flagged_decimals.c ./widechr.c ./flagged_unsigned.c ./ft_printf.c \
-	  ./output.c ./pointer.c ./printf_lib.c ./unsigned.c ./other.c ./wide_chars.c ./octal.c ./hex.c 
+	  ./output.c ./wchars.c ./pointer.c ./printf_lib.c ./unsigned.c ./other.c ./wide_chars.c ./octal.c ./hex.c 
 
 OBJ = $(SRC:.c=.o)	
 

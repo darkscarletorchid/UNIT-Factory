@@ -1,51 +1,52 @@
-//
-// Created by Anastasiia Trepyton on 3/16/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   octal.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/20 15:06:30 by atrepyto          #+#    #+#             */
+/*   Updated: 2017/03/20 15:06:32 by atrepyto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-void	output_octal(t_printf *p, unsigned long long nb, int base)
+void	nonzero_octal(t_printf *p, unsigned long long nb, int base)
 {
-	int			len;
-	int 		w;
-	int 		prec;
-	char		*s;
-	int 		i;
-	int			flag;
+	t_output o;
 
-	s = ft_itoa_base(nb, base);
-	len = ft_strlen(s);
-	prec = 0;
-	if (nb == 0)
-		number_zero(p);
-	else {
-		flag = p->sharp == 2 ? 1 : 0;
-		if (p->precision >= len)
-			prec = p->precision - len - flag;
-		w = p->width - prec - len - flag;
-		while (w > 0 && p->minus != 1 &&
-			   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
-		{
-			c_putchar(' ');
-			w--;
-		}
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
-			w--;
-		}
-		i = -1;
-		while (++i < prec)
-			c_putchar('0');
-		if (flag)
-			c_putstr("0");
-		c_putstr(s);
-		while (w > 0 && p->minus == 1)
-		{
-			c_putchar(' ');
-			w--;
-		}
+	o.s = ft_itoa_base(nb, base);
+	o.len = ft_strlen(o.s);
+	o.flag = p->sharp == 2 ? 1 : 0;
+	o.prec = p->precision >= o.len ? p->precision - o.len - o.flag : 0;
+	o.w = p->width - o.prec - o.len - o.flag;
+	space_kostyl(&o, p);
+	while (o.w > 0 && p->minus != 1 && p->zero == 1 && o.prec == 0)
+	{
+		c_putchar('0');
+		o.w--;
+	}
+	o.i = -1;
+	while (++o.i < o.prec)
+		c_putchar('0');
+	ox_kostyl(o.flag, p);
+	c_putstr(o.s);
+	while (o.w > 0 && p->minus == 1)
+	{
+		c_putchar(' ');
+		o.w--;
 	}
 }
+
+void	output_octal(t_printf *p, intmax_t nb, int base)
+{
+	if (nb == 0)
+		number_zero(p);
+	else
+		nonzero_octal(p, nb, base);
+}
+
 void	unflagged_octal(t_printf *p, va_list ap)
 {
 	long int	nb;
@@ -82,4 +83,3 @@ void	put_octal(t_printf *p, va_list ap)
 	else
 		unflagged_octal(p, ap);
 }
-

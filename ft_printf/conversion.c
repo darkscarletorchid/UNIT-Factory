@@ -12,11 +12,11 @@
 
 #include "ft_printf.h"
 
-void	flags(t_printf *p)
+int		flags(t_printf *p, char *s)
 {
-	char *s;
+	int i;
 
-	s = p->arg;
+	i = 0;
 	while (*s)
 	{
 		if (*s == '-')
@@ -29,34 +29,39 @@ void	flags(t_printf *p)
 			p->sharp = 2;
 		else if (*s == ' ')
 			p->space = 1;
-		else if (ft_strchr("sSpdDioOuUxXcChljz123456789%", *s))
+		else if (ft_strchr(".sSpdDioOuUxXcC123456789%", *s))
+		{
+			i++;
 			break ;
+		}
 		s++;
+		i++;
 	}
+	return (i);
 }
 
 void	length_flags(t_printf *p, char *s)
 {
-	int i;
 	int j;
 
-	j = 0;
-	while (s[j])
+	j = -1;
+	while (s[++j])
 	{
 		if (ft_strchr("hljz", s[j]))
 		{
-			i = j;
-			while (!ft_strchr("sSpdDioOuUxXcC%", s[i]))
-				i++;
-			if (s[j] == 'l' && i > 1)
-				p->length = ft_strdup("ll");
-			else if (s[j] == 'h' && i > 1)
-				p->length = ft_strdup("hh");
+			if (s[j] == 'l' || s[j] == 'h')
+			{
+				if (s[j + 1] == 'l' || s[j + 1] == 'h')
+					p->length = ft_strsub(s, 0, 2);
+				else if (s[++j] == ' ')
+					undef_flag(p, j, s);
+				else
+					p->length = ft_strsub(s, 0, 1);
+			}
 			else
-				p->length = ft_strsub(s, 0, i);
+				p->length = ft_strsub(s, 0, 1);
 			break ;
 		}
-		j++;
 	}
 }
 
@@ -64,7 +69,7 @@ void	parse_arg(t_printf *p)
 {
 	char *s;
 
-	flags(p);
+	flags(p, p->arg);
 	s = p->arg;
 	while (ft_strchr("+-0# ", *s) && *s)
 		++s;
@@ -78,8 +83,10 @@ void	parse_arg(t_printf *p)
 			if (ft_atoi(s + 1))
 				p->width = ft_atoi(s + 1);
 		}
-		if (*s == '.')
+		else if (*s == '.')
 			p->precision = ft_atoi(s + 1);
+		else if (ft_strchr("+-# ", *s))
+			s += flags(p, s);
 		if (ft_strchr("sSpdDioOuUxXcC%hljz", *s))
 			break ;
 		s++;
@@ -96,30 +103,33 @@ void	null_struct(t_printf *p)
 	p->space = 0;
 	p->width = 0;
 	p->precision = 0;
+	p->length = ft_strnew(0);
 }
 
 int		check_conversion(char *format, va_list ap)
 {
-	size_t		i;
+	int			i;
 	t_printf	p;
 
-	i = 0;
+	i = -1;
 	null_struct(&p);
-	p.convers = '0';
-	if (format[i] == '\0')
+	if (format[0] == '\0')
 		p.arg = ft_strnew(0);
-	while (format[i])
+	while (format[++i])
 	{
-		if (ft_strchr("%sSpdDioOuUxXcC", format[i]))
+		if (!ft_strchr("-+.# 0123456789hljz%sSpdDioOuUxXcC", format[i]))
 		{
 			p.convers = format[i];
-			i++;
 			break ;
 		}
-		i++;
+		else if (ft_strchr("%sSpdDioOuUxXcC", format[i])
+			|| format[i + 1] == '\0')
+		{
+			p.convers = format[i];
+			break ;
+		}
 	}
-
-	p.arg = ft_strsub(format, 0, i);
+	p.arg = ft_strsub(format, 0, i + 1);
 	parse_arg(&p);
 	put_arg(&p, ap);
 	return (ft_strlen(p.arg));

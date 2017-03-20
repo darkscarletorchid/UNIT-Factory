@@ -6,7 +6,7 @@
 /*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/12 18:58:57 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/12 19:13:45 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/20 09:58:43 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		ft_printf(const char *format, ...)
 	char	*str;
 
 	i = 0;
+	g_count = 0;
 	va_start(ap, format);
 	str = (char *)format;
 	len = ft_strlen(str);
@@ -42,7 +43,7 @@ int		ft_printf(const char *format, ...)
 		}
 	}
 	va_end(ap);
-	return (count);
+	return (g_count);
 }
 
 //int main()
@@ -59,9 +60,12 @@ int		ft_printf(const char *format, ...)
 ////	const char A[] = "this is tEEEEst!";
 //
 //	//int c = ft_printf("%d dff%C ffdsf%s dsfewf%d wefwef%u wef%X efwww%c\n", 100, 'a', "qwerty", -56, 8885, 26, 'a');
-//	int c = ft_printf("%- 3w", 10);
-//	int p = printf("%- 3w", 10);
+//	int c = ft_printf("%22llu", 9223372036854775808);
+//	int p = printf("%22llu", 9223372036854775808);
 //	printf("\n%d\n", c);
 //	printf("\n%d\n", p);
+//
+//	ft_printf("%@@\n", L"@@");
+//	printf("%@@\n", L"%@@");
 //	return (0);
 //}

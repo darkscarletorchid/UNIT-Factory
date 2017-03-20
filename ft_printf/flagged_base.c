@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flagged_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/20 14:12:09 by atrepyto          #+#    #+#             */
+/*   Updated: 2017/03/20 14:12:55 by atrepyto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	h_flag3(t_printf *p, va_list ap, int base)
 {
 	unsigned short int	nb;
 
-	nb = (unsigned short)va_arg(ap, int);
+	nb = (unsigned short)va_arg(ap, unsigned int);
 	if (p->convers == 'x' || p->convers == 'X')
 		base_output(p, nb, base);
 	else if (p->convers == 'o' || p->convers == 'O')
@@ -15,7 +27,7 @@ void	hh_flag3(t_printf *p, va_list ap, int base)
 {
 	unsigned char	nb;
 
-	nb = (unsigned char)va_arg(ap, int);
+	nb = (unsigned char)va_arg(ap, unsigned int);
 	if (p->convers == 'x' || p->convers == 'X')
 		base_output(p, nb, base);
 	else if (p->convers == 'o' || p->convers == 'O')

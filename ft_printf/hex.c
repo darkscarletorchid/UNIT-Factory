@@ -1,6 +1,15 @@
-//
-// Created by Anastasiia Trepyton on 3/16/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hex.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/20 14:33:32 by atrepyto          #+#    #+#             */
+/*   Updated: 2017/03/20 14:33:33 by atrepyto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	unflagged_hex(t_printf *p, va_list ap)
@@ -11,58 +20,51 @@ void	unflagged_hex(t_printf *p, va_list ap)
 	base_output(p, nb, 16);
 }
 
-void	base_output(t_printf *p, unsigned long long nb, int base)
+void	get_params(unsigned long long nb, int base, t_output *o, t_printf *p)
 {
-	int		len;
-	char	*s;
-	int 	prec;
-	int		w;
-	int		flag;
-	int 	i;
+	o->s = ft_itoa_base(nb, base);
+	o->len = ft_strlen(o->s);
+	o->prec = p->precision >= o->len ? p->precision - o->len : 0;
+	o->flag = p->sharp == 2 ? 2 : 0;
+	o->w = p->width - o->prec - o->len - o->flag;
+	if (p->convers == 'x')
+		ft_lowercase(o->s);
+}
 
-	s = ft_itoa_base(nb, base);
-	len = ft_strlen(s);
-	prec = 0;
+void	nonzero_hex(t_printf *p, unsigned long long nb, int base)
+{
+	t_output	o;
+
+	get_params(nb, base, &o, p);
+	while (o.w > 0 && p->minus != 1 &&
+		(p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+	{
+		c_putchar(' ');
+		o.w--;
+	}
+	ox_kostyl(o.flag, p);
+	while (o.w > 0 && p->minus != 1 && p->zero == 1 && o.prec == 0)
+	{
+		c_putchar('0');
+		o.w--;
+	}
+	o.i = -1;
+	while (++o.i < o.prec)
+		c_putchar('0');
+	c_putstr(o.s);
+	while (o.w > 0 && p->minus == 1)
+	{
+		c_putchar(' ');
+		o.w--;
+	}
+}
+
+void	base_output(t_printf *p, intmax_t nb, int base)
+{
 	if (nb == 0)
 		number_zero(p);
 	else
-	{
-		flag = p->sharp == 2 ? 2 : 0;
-		if (p->precision >= len)
-			prec = p->precision - len;
-		w = p->width - prec - len - flag;
-		while (w > 0 && p->minus != 1 &&
-			   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
-		{
-			c_putchar(' ');
-			w--;
-		}
-		if (flag && p->convers == 'x')
-			c_putstr("0x");
-		else if (flag && p->convers == 'X')
-			c_putstr("0X");
-		while (w > 0 && p->minus != 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
-			w--;
-		}
-		i = -1;
-		while (++i < prec)
-			c_putchar('0');
-		if (p->convers == 'x')
-			ft_lowercase(s);
-		c_putstr(s);
-		while (w > 0 && p->minus == 1)
-		{
-			c_putchar(' ');
-			w--;
-		}
-		while (w > 0 && p->minus == 1 && p->zero == 1 && prec == 0)
-		{
-			c_putchar('0');
-			w--;
-		}
-	}
+		nonzero_hex(p, nb, base);
 }
 
 void	put_hex(t_printf *p, va_list ap)

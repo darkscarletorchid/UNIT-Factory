@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*ft_itoa_base(long long int value, int base)
+char	*ft_itoa_base(intmax_t value, int base)
 {
 	const char	*hex;
 	char		*res;

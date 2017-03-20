@@ -14,8 +14,9 @@
 
 void	put_percent(t_printf *p)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	if (p->minus != 1)
 		print_spaces(p, 1);
 	while (ft_strchr("-+.0123456789 hljz", p->arg[i]) && p->arg[i])
@@ -59,8 +60,5 @@ void	put_arg(t_printf *p, va_list ap)
 	else if (p->convers == 'p')
 		put_pointer(p, ap);
 	else
-	{
-		//printf()
 		put_percent(p);
-	}
 }

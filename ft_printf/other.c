@@ -34,3 +34,35 @@ void	add_width(t_printf *p, int len)
 		len++;
 	}
 }
+
+void	undef_flag(t_printf *p, int j, char *s)
+{
+	while (s[j] == ' ' && s[j])
+		j++;
+	if (s[j] == 'l')
+		p->length = ft_strdup("ll");
+	else if (s[j] == 'h')
+		p->length = ft_strdup("hh");
+}
+
+void	ox_kostyl(int flag, t_printf *p)
+{
+	if (flag && p->convers == 'x')
+		c_putstr("0x");
+	else if (flag && p->convers == 'X')
+		c_putstr("0X");
+	else if (flag && p->convers == 'o')
+		c_putstr("0");
+	else if (flag && p->convers == 'O')
+		c_putstr("0");
+}
+
+void	space_kostyl(t_output *o, t_printf *p)
+{
+	while (o->w > 0 && p->minus != 1 &&
+		   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+	{
+		c_putchar(' ');
+		o->w--;
+	}
+}
