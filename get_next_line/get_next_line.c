@@ -6,26 +6,13 @@
 /*   By: atrepyto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 17:17:22 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/01/26 18:16:41 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/20 18:42:46 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "./libft/libft.h"
-
-static int	sln(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
+#include <limits.h>
 
 static char	*my_cat(char *str, char *buf)
 {
@@ -53,28 +40,28 @@ static void	get_line(char *str, char **line, char **tmp, char **buf)
 
 int			get_next_line(const int fd, char **line)
 {
-	static char	*tmp;
+	static char	*tmp[OPEN_MAX];
 	char		*buf;
 	char		*str;
 	int			ret;
 
-	if (fd < 0 || fd == 1 || fd == 99 || fd == 42 || BUFF_SIZE <= 0)
+	if (fd < 0 || BUFF_SIZE <= 0 || fd > OPEN_MAX)
 		return (-1);
 	buf = ft_strnew(BUFF_SIZE);
 	str = ft_strnew(0);
-	if (tmp && (str = ft_strjoin(str, tmp + 1)))
-		ft_strdel(&tmp);
+	if (tmp[fd] && (str = ft_strjoin(str, tmp[fd] + 1)))
+		ft_strdel(&tmp[fd]);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		if (ret < 0)
 			return (-1);
 		buf[ret] = '\0';
 		str = my_cat(str, buf);
-		if (sln(buf) >= 0)
+		if (ft_strchr(buf, '\n'))
 			break ;
 	}
 	if (ret == 0 && (buf[0] == '\0' && str[0] == '\0'))
 		return (0);
-	get_line(str, line, &tmp, &buf);
+	get_line(str, line, &tmp[fd], &buf);
 	return (1);
 }
