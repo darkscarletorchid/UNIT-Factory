@@ -6,17 +6,17 @@
 /*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 12:26:16 by exam              #+#    #+#             */
-/*   Updated: 2017/02/07 12:45:06 by exam             ###   ########.fr       */
+/*   Updated: 2017/03/20 17:28:09 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa_base(intmax_t value, int base)
+char	*ft_itoa_base(long long int value, int base)
 {
-	const char	*hex;
-	char		*res;
-	int			len;
+	const char		*hex;
+	char			*res;
+	int				len;
 	long long int	temp;
 
 	hex = "0123456789ABCDEF";

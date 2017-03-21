@@ -6,13 +6,13 @@
 /*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 13:26:06 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/20 13:26:09 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/20 17:29:51 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	number_zero(t_printf *p)
+void		number_zero(t_printf *p)
 {
 	int i;
 	int f;

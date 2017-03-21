@@ -6,30 +6,34 @@
 #    By: atrepyto <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/29 10:36:01 by atrepyto          #+#    #+#              #
-#    Updated: 2017/03/20 14:08:40 by atrepyto         ###   ########.fr        #
+#    Updated: 2017/03/20 17:58:25 by atrepyto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = ./ft_atoi.c ./ft_bzero.c ./ft_isalnum.c ./ft_isalpha.c ./ft_isascii.c \
-	  ./ft_isdigit.c ./ft_isprint.c ./ft_itoa.c ./ft_memalloc.c ./ft_memccpy.c \
-	  ./ft_memchr.c ./ft_memcmp.c ./ft_memcpy.c ./ft_memdel.c ./ft_memmove.c \
-	  ./ft_memset.c ./ft_putchar.c ./ft_putchar_fd.c ./ft_putendl.c \
-	  ./ft_putendl_fd.c ./ft_putnbr.c ./ft_putnbr_fd.c ./ft_putstr.c \
-	  ./ft_putstr_fd.c ./ft_strcat.c ./ft_strchr.c ./ft_strclr.c ./ft_strcmp.c \
-	  ./ft_strcpy.c ./ft_strdel.c ./ft_strdup.c ./ft_strequ.c ./ft_striter.c \
-	  ./ft_striteri.c ./ft_strjoin.c ./ft_strlcat.c ./ft_strlen.c ./ft_strmap.c \
-	  ./ft_strmapi.c ./ft_strncat.c ./ft_strncmp.c ./ft_strncpy.c ./ft_strnequ.c \
-	  ./ft_strnew.c ./ft_strnstr.c ./ft_strrchr.c ./ft_strstr.c ./ft_strsub.c \
-	  ./ft_strtrim.c ./ft_tolower.c ./ft_toupper.c ./ft_strsplit.c \
-	  ./ft_lstdel.c ./ft_lstadd.c ./ft_lstdelone.c ./ft_lstiter.c ./ft_lstmap.c \
-	  ./ft_lstnew.c ./ft_strrev.c ./ft_swap.c ./ft_uppercase.c ./ft_lowercase.c \
-	  ./ft_strlcpy.c ./ft_replacechr.c ./ft_strndup.c ./get_next_line.c \
-	  ./ft_isspace.c ./ft_atof.c ./ft_itoa_base.c ./ft_nblen.c \
-	  ./chars.c ./conversion.c ./decimals.c ./flagged_base.c \
-	  ./flagged_decimals.c ./widechr.c ./flagged_unsigned.c ./ft_printf.c \
-	  ./output.c ./wchars.c ./pointer.c ./printf_lib.c ./unsigned.c ./other.c ./wide_chars.c ./octal.c ./hex.c 
+SRC = ./libft/ft_atoi.c ./libft/ft_bzero.c ./libft/ft_isalnum.c \
+        ./libft/ft_isascii.c ./libft/ft_isdigit.c ./libft/ft_strncmp.c\
+        ./libft/ft_isprint.c ./libft/ft_itoa.c ./libft/ft_memalloc.c \
+        ./libft/ft_memccpy.c ./libft/ft_memchr.c ./libft/ft_memcmp.c \
+        ./libft/ft_memcpy.c ./libft/ft_memdel.c ./libft/ft_memmove.c \
+        ./libft/ft_memset.c ./libft/ft_putchar.c ./libft/ft_putchar_fd.c \
+        ./libft/ft_putendl.c ./libft/ft_putendl_fd.c ./libft/ft_putnbr.c \
+        ./libft/ft_putnbr_fd.c ./libft/ft_putstr.c ./libft/ft_putstr_fd.c \
+        ./libft/ft_strcat.c ./libft/ft_strchr.c ./libft/ft_strclr.c \
+        ./libft/ft_strcmp.c ./libft/ft_strcpy.c ./libft/ft_strdel.c \
+        ./libft/ft_strdup.c ./libft/ft_strequ.c ./libft/ft_striter.c \
+        ./libft/ft_striteri.c ./libft/ft_strjoin.c ./libft/ft_strlcat.c \
+        ./libft/ft_strlen.c ./libft/ft_strnew.c ./libft/ft_strnstr.c \
+        ./libft/ft_strrchr.c ./libft/ft_strstr.c ./libft/ft_strsub.c \
+        ./libft/ft_strtrim.c ./libft/ft_strsplit.c ./libft/ft_uppercase.c \
+        ./libft/ft_lowercase.c ./libft/ft_strndup.c ./libft/get_next_line.c \
+        ./libft/ft_isspace.c ./libft/ft_atof.c ./libft/ft_itoa_base.c \
+        ./libft/ft_nblen.c \
+        ./conversion.c ./ft_printf.c ./output.c ./chars.c ./wchars.c \
+        ./wide_chars.c ./pointer.c ./printf_lib.c ./other.c \
+        ./flagged_decimals.c ./decimals.c ./octal.c ./hex.c ./unsigned.c \
+        ./flagged_base.c ./flagged_unsigned.c
 
 OBJ = $(SRC:.c=.o)	
 
@@ -42,12 +46,16 @@ INC = ./
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
+	@echo "\033[1;34;05mCompiling started..."
+	@ar rcs $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo "\033[1;33mLibrary compiled"
 
-$(OBG):
-	@$(CC) $(FLG) -I $(INC) $(SRC)
-
+%.o: %.c
+	@$(CC) $(FLG) -I $(INC) -c $< -o $@
+	
 clean:
+	@echo "\033[1;5;32mCleaned"
 	@rm -rf $(OBJ)
 
 fclean: clean

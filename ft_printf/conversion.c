@@ -29,7 +29,7 @@ int		flags(t_printf *p, char *s)
 			p->sharp = 2;
 		else if (*s == ' ')
 			p->space = 1;
-		else if (ft_strchr(".sSpdDioOuUxXcC123456789%", *s))
+		else if (ft_strchr(".sSpdDioOuUxXcCb123456789%", *s))
 		{
 			i++;
 			break ;
@@ -86,8 +86,8 @@ void	parse_arg(t_printf *p)
 		else if (*s == '.')
 			p->precision = ft_atoi(s + 1);
 		else if (ft_strchr("+-# ", *s))
-			s += flags(p, s);
-		if (ft_strchr("sSpdDioOuUxXcC%hljz", *s))
+			flags(p, s);
+		if (ft_strchr("sSpdDioOuUxXcCb%hljz", *s))
 			break ;
 		s++;
 	}
@@ -117,12 +117,12 @@ int		check_conversion(char *format, va_list ap)
 		p.arg = ft_strnew(0);
 	while (format[++i])
 	{
-		if (!ft_strchr("-+.# 0123456789hljz%sSpdDioOuUxXcC", format[i]))
+		if (!ft_strchr("-+.# 0123456789hljz%bsSpdDioOuUxXcC", format[i]))
 		{
 			p.convers = format[i];
 			break ;
 		}
-		else if (ft_strchr("%sSpdDioOuUxXcC", format[i])
+		else if (ft_strchr("%sSpdDioOuUxXcCb", format[i])
 			|| format[i + 1] == '\0')
 		{
 			p.convers = format[i];

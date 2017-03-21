@@ -6,13 +6,13 @@
 /*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 15:36:40 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/20 15:44:02 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/21 15:19:16 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "libft.h"
+# include "libft/libft.h"
 # include <stdarg.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -59,7 +59,9 @@ int				flags(t_printf *p, char *s);
 ** output.c
 */
 void			put_arg(t_printf *p, va_list ap);
-void			put_percent(t_printf *p);
+void			put_percent(t_printf *p, va_list ap);
+void			put_binary(t_printf *p, va_list ap);
+void			nonzero_binary(t_printf *p, unsigned long long nb);
 /*
 ** chars.c
 */

@@ -6,7 +6,7 @@
 /*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 13:15:43 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/20 13:18:18 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/20 17:45:40 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		charlen(wint_t c)
 {
 	int len;
 
+	len = 0;
 	if (c <= 0x7F)
 		len = 1;
 	else if (c <= 0x7FF)

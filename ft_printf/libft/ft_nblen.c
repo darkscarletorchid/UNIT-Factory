@@ -1,50 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_lib.c                                       :+:      :+:    :+:   */
+/*   ft_nblen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/20 13:37:36 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/20 13:37:42 by atrepyto         ###   ########.fr       */
+/*   Created: 2017/03/20 17:27:24 by atrepyto          #+#    #+#             */
+/*   Updated: 2017/03/20 17:27:47 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	c_putchar(char c)
-{
-	write(1, &c, 1);
-	g_count++;
-}
-
-void	c_putstr(char *str)
+int		nblen(long long int nb, int base)
 {
 	int i;
 
 	i = 0;
-	if (str)
+	if (nb == 0)
+		i++;
+	if (nb < 0 && base == 10)
+		i++;
+	while (nb)
 	{
-		while (str[i])
-		{
-			write(1, &str[i], 1);
-			g_count++;
-			i++;
-		}
+		nb = nb / base;
+		i++;
 	}
+	return (i);
 }
 
-void	c_putnbr(unsigned long long nb)
+int		unsigned_nblen(unsigned long int nb, int base)
 {
-	if (nb >= 10)
+	int i;
+
+	i = 0;
+	if (nb == 0)
+		i++;
+	while (nb)
 	{
-		c_putnbr(nb / 10);
-		c_putnbr(nb % 10);
+		nb = nb / base;
+		i++;
 	}
-	if (nb == 0 || (nb > 0 && nb <= 9))
-	{
-		nb = nb + '0';
-		write(1, &nb, 1);
-		g_count++;
-	}
+	return (i);
 }

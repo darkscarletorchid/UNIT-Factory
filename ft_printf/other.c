@@ -6,7 +6,7 @@
 /*   By: atrepyto <atrepyto@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 18:46:54 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/15 18:46:57 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/03/20 17:30:24 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ox_kostyl(int flag, t_printf *p)
 void	space_kostyl(t_output *o, t_printf *p)
 {
 	while (o->w > 0 && p->minus != 1 &&
-		   (p->zero != 1 || (p->zero == 1 && p->precision > 0)))
+		(p->zero != 1 || (p->zero == 1 && p->precision > 0)))
 	{
 		c_putchar(' ');
 		o->w--;
