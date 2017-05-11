@@ -6,7 +6,7 @@
 /*   By: atrepyto <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 17:17:22 by atrepyto          #+#    #+#             */
-/*   Updated: 2017/03/20 18:42:46 by atrepyto         ###   ########.fr       */
+/*   Updated: 2017/05/11 12:30:59 by atrepyto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			get_next_line(const int fd, char **line)
 		return (-1);
 	buf = ft_strnew(BUFF_SIZE);
 	str = ft_strnew(0);
-	if (tmp[fd] && (str = ft_strjoin(str, tmp[fd] + 1)))
+	if (tmp[fd] && (str = my_cat(str, tmp[fd] + 1)))
 		ft_strdel(&tmp[fd]);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
